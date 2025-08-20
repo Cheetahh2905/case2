@@ -6,9 +6,9 @@ import Product from "./pages/Product";
 import CreateProduct from "./pages/CreateProduct";
 import EditProduct from "./pages/EditProduct";
 import ProductDetails from "./pages/ProductDetails";
-import MyOrders from "./pages/MyOrder";
-import ManageOrders from "./pages/ManageOrder";
 import Orders from "./pages/Order";
+import OrderManagement from "./pages/OrderManagement";
+import Profile from "./pages/Profile";
 
 
 function App() {
@@ -21,9 +21,9 @@ function App() {
                 <Route path='add-product' element={<CreateProduct/>}/>
                 <Route path='edit-product/:id' element={<EditProduct/>}/>
                 <Route path='products/:id' element={<ProductDetails/>}/>
-                <Route path='my-orders' element={<MyOrders/>}/>
-                <Route path='manage-orders' element={<ManageOrders/>}/>
                 <Route path='orders' element={<Orders/>}/>
+                <Route path='order-management' element={<OrderManagement/>}/>
+                <Route path='edit-user/:id' element={<Profile/>}/>
             </Route>
         </Routes>
     );

@@ -35,3 +35,4 @@ export async function updateOrderStatus(orderId, newStatus) {
 export async function deleteOrder(orderId) {
     await axios.delete(`${URL_Orders}/${orderId}`);
 }
+

@@ -1,11 +1,7 @@
 {
   "users": [
     {
-      "id": "u1",
-      "name": "Nguyễn Văn Admin",
-      "username": "admin",
-      "password": "123",
-      "role": "admin"
+      "id": "u1"
     },
     {
       "id": "u2",
@@ -40,9 +36,10 @@
       "name": "Laptop Dell",
       "description": "Laptop mỏng nhẹ, hiệu năng cao, phù hợp cho dân văn phòng",
       "price": 32000000,
-      "stock": "12",
+      "stock": 12,
       "createdBy": "u1",
-      "createdAt": "2024-07-01T09:00:00.000Z"
+      "createdAt": "2024-07-01T09:00:00.000Z",
+      "image": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8"
     },
     {
       "id": "p2",
@@ -51,7 +48,8 @@
       "price": 35000000,
       "stock": 8,
       "createdBy": "u1",
-      "createdAt": "2024-07-02T10:30:00.000Z"
+      "createdAt": "2024-07-02T10:30:00.000Z",
+      "image": "https://vuasmartphone.vn/upload/Man_hinh_iPhone_15_Pro_Max.jpg"
     },
     {
       "id": "p3",
@@ -60,7 +58,8 @@
       "price": 2500000,
       "stock": 15,
       "createdBy": "u1",
-      "createdAt": "2024-07-03T14:00:00.000Z"
+      "createdAt": "2024-07-03T14:00:00.000Z",
+      "image": "https://fiveskindecal.com/uploads/source/sanpham-moi/mieng-dan-skin-chuot-logitech-master-2-2s-amp-master-3-3s-green-hurricance.jpg"
     },
     {
       "id": "p4",
@@ -69,16 +68,18 @@
       "price": 2200000,
       "stock": 12,
       "createdBy": "u1",
-      "createdAt": "2024-07-04T09:15:00.000Z"
+      "createdAt": "2024-07-04T09:15:00.000Z",
+      "image": "https://laz-img-sg.alicdn.com/p/0b7ccb53918f3fcd61b28edcbf94e483.jpg"
     },
     {
       "id": "9d88",
-      "name": "Ipad M3",
-      "description": "Sản phẩm ipad",
+      "name": "iPad M3",
+      "description": "Sản phẩm iPad cao cấp",
       "price": 50000000,
       "stock": 5,
       "createdBy": "u1",
-      "createdDate": "2025-08-15T13:13:19.406Z"
+      "createdDate": "2025-08-15T13:13:19.406Z",
+      "image": "https://2tmobile.com/wp-content/uploads/2025/03/ipad-air-m3-11-inch-cellular-2tmobile.webp"
     }
   ],
   "orders": [
@@ -119,7 +120,7 @@
           "quantity": 1
         }
       ],
-      "status": "cancelled",
+      "status": "delivered",
       "createdAt": "2024-07-07T11:45:00.000Z"
     },
     {
@@ -187,8 +188,68 @@
       "productName": "Laptop Dell",
       "quantity": 1,
       "totalPrice": 32000000,
-      "status": "pending",
+      "status": "delivered",
       "createdAt": "2025-08-18T13:05:19.233Z"
+    },
+    {
+      "id": "4637",
+      "userId": "u2",
+      "productId": "p1",
+      "productName": "Laptop Dell",
+      "quantity": 5,
+      "totalPrice": 160000000,
+      "status": "pending",
+      "createdAt": "2025-08-19T10:45:50.830Z"
+    },
+    {
+      "id": "cd26",
+      "userId": "u2",
+      "productId": "p2",
+      "productName": "Điện thoại iPhone 15 Pro",
+      "quantity": 5,
+      "totalPrice": 175000000,
+      "status": "cancelled",
+      "createdAt": "2025-08-19T10:46:13.198Z"
+    },
+    {
+      "id": "9815",
+      "userId": "u2",
+      "productId": "p3",
+      "productName": "Chuột Logitech MX Master 3S",
+      "quantity": 7,
+      "totalPrice": 17500000,
+      "status": "pending",
+      "createdAt": "2025-08-19T10:46:25.466Z"
+    },
+    {
+      "id": "7cff",
+      "userId": "u2",
+      "productId": "p1",
+      "productName": "Laptop Dell",
+      "quantity": 16,
+      "totalPrice": 512000000,
+      "status": "pending",
+      "createdAt": "2025-08-19T10:47:15.483Z"
+    },
+    {
+      "id": "b387",
+      "userId": "u2",
+      "productId": "p1",
+      "productName": "Laptop Dell",
+      "quantity": 6,
+      "totalPrice": 192000000,
+      "status": "pending",
+      "createdAt": "2025-08-19T11:42:49.635Z"
+    },
+    {
+      "id": "5c2b",
+      "userId": "u2",
+      "productId": "p1",
+      "productName": "Laptop Dell",
+      "quantity": 8,
+      "totalPrice": 256000000,
+      "status": "delivered",
+      "createdAt": "2025-08-19T12:27:39.301Z"
     }
   ]
 }

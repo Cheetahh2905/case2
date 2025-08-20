@@ -12,31 +12,56 @@ export default function Orders() {
             setCurrentUser(user);
 
             if (user.role === "admin") {
-                // Admin -> xem tất cả đơn hàng
                 getOrders().then(setOrders);
             } else {
-                // User -> chỉ xem đơn hàng của chính mình
                 getOrdersByUser(user.id).then(setOrders);
             }
         }
     }, []);
 
     return (
-        <div>
-            <h2>Danh sách đơn hàng</h2>
-            {orders.length === 0 ? (
-                <p>Chưa có đơn hàng nào</p>
-            ) : (
-                orders.map((order) => (
-                    <div key={order.id} style={{ border: "1px solid gray", margin: "10px", padding: "10px" }}>
-                        <p><b>Mã đơn hàng:</b> {order.id}</p>
-                        <p><b>Người mua:</b> {order.userId}</p>
-                        <p><b>Sản phẩm:</b> {order.productName}</p>
-                        <p><b>Số lượng:</b> {order.quantity}</p>
-                        <p><b>Tổng tiền:</b> {order.totalPrice}</p>
-                    </div>
-                ))
-            )}
+        <div className="container my-5">
+            <div className="card shadow-lg border-0 rounded-4">
+                <div className="card-header bg-gradient text-white rounded-top-4 p-3"
+                     style={{ background: "linear-gradient(135deg, #4facfe, #00f2fe)" }}>
+                    <h3 className="mb-0 text-center">📦 Danh sách đơn hàng</h3>
+                </div>
+                <div className="card-body">
+                    {orders.length === 0 ? (
+                        <div className="alert alert-info text-center fs-5 rounded-3 shadow-sm">
+                            🚫 Chưa có đơn hàng nào
+                        </div>
+                    ) : (
+                        <div className="table-responsive">
+                            <table className="table align-middle table-hover">
+                                <thead className="text-white"
+                                       style={{ background: "linear-gradient(90deg, #43cea2, #185a9d)" }}>
+                                <tr className="text-center">
+                                    <th>Mã đơn</th>
+                                    <th>Người mua</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {orders.map((order) => (
+                                    <tr key={order.id} className="shadow-sm">
+                                        <td className="fw-bold text-center text-primary">{order.id}</td>
+                                        <td>{order.userId}</td>
+                                        <td>{order.productName}</td>
+                                        <td className="text-center">{order.quantity}</td>
+                                        <td className="text-end fw-semibold text-success">
+                                            {Number(order.totalPrice).toLocaleString("vi-VN")} ₫
+                                        </td>
+                                    </tr>
+                                ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
