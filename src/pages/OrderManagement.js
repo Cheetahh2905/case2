@@ -1,11 +1,26 @@
 import { useEffect, useState } from "react";
 import { getOrders, getOrdersByUser, updateOrderStatus } from "../service/OrderService";
 import { useNavigate } from "react-router-dom";
+import {
+    Container,
+    Grid,
+    Card,
+    CardContent,
+    Typography,
+    Select,
+    MenuItem,
+    InputLabel,
+    FormControl,
+    Button,
+    Alert,
+    Chip,
+    Box,
+} from "@mui/material";
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
-    const [editedOrders, setEditedOrders] = useState({}); // lưu trạng thái đã chỉnh sửa
+    const [editedOrders, setEditedOrders] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,105 +45,100 @@ export default function Orders() {
     }
 
     async function handleSaveAll() {
-        // Lưu tất cả thay đổi lên server
         for (let orderId in editedOrders) {
             await updateOrderStatus(orderId, editedOrders[orderId]);
         }
         alert("Cập nhật trạng thái thành công ✅");
-        navigate("/home"); // Quay lại trang Home
+        navigate("/home");
     }
 
-    function getStatusBadge(status) {
+    function getStatusChip(status) {
         switch (status) {
             case "pending":
-                return "badge bg-warning text-dark";
+                return <Chip label="Pending" color="warning" variant="outlined" />;
             case "delivered":
-                return "badge bg-success";
+                return <Chip label="Delivered" color="success" variant="outlined" />;
             case "cancelled":
-                return "badge bg-danger";
+                return <Chip label="Cancelled" color="error" variant="outlined" />;
             default:
-                return "badge bg-secondary";
+                return <Chip label={status} color="default" />;
         }
     }
 
     return (
-        <div className="container mt-4 orders-page">
-            <h2 className="text-center mb-4 fw-bold title">
+        <Container sx={{ mt: 4 }}>
+            <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
                 📦 Danh sách đơn hàng
-            </h2>
+            </Typography>
 
             {orders.length === 0 ? (
-                <div className="alert alert-info text-center shadow-sm">
-                    Chưa có đơn hàng nào
-                </div>
+                <Alert severity="info" sx={{ textAlign: "center", fontSize: "1.1rem" }}>
+                    🚫 Chưa có đơn hàng nào
+                </Alert>
             ) : (
                 <>
-                    <div className="row">
+                    <Grid container spacing={3}>
                         {orders.map((order) => (
-                            <div key={order.id} className="col-md-6 mb-4">
-                                <div className="card order-card shadow-lg border-0 h-100">
-                                    <div className="card-body">
-                                        <h5 className="card-title fw-bold text-primary">
+                            <Grid item xs={12} md={6} key={order.id}>
+                                <Card sx={{ borderRadius: 3, boxShadow: 4, height: "100%" }}>
+                                    <CardContent>
+                                        <Typography variant="h6" color="primary" fontWeight="bold">
                                             Mã đơn: {order.id}
-                                        </h5>
-                                        <p className="mb-2">
+                                        </Typography>
+                                        <Typography>
                                             <b>Người mua:</b> {order.userId}
-                                        </p>
-                                        <p className="mb-2">
+                                        </Typography>
+                                        <Typography>
                                             <b>Sản phẩm:</b> {order.productName}
-                                        </p>
-                                        <p className="mb-2">
+                                        </Typography>
+                                        <Typography>
                                             <b>Số lượng:</b> {order.quantity}
-                                        </p>
-                                        <p className="mb-2">
+                                        </Typography>
+                                        <Typography>
                                             <b>Tổng tiền:</b>{" "}
-                                            <span className="text-success fw-bold">
+                                            <Box component="span" color="success.main" fontWeight="bold">
                                                 {Number(order.totalPrice).toLocaleString("vi-VN")} ₫
-                                            </span>
-                                        </p>
-                                        <p>
-                                            <b>Trạng thái:</b>{" "}
-                                            <span className={getStatusBadge(order.status)}>
-                                                {order.status}
-                                            </span>
-                                        </p>
+                                            </Box>
+                                        </Typography>
+                                        <Typography sx={{ mt: 1 }}>
+                                            <b>Trạng thái:</b> {getStatusChip(order.status)}
+                                        </Typography>
 
                                         {currentUser?.role === "admin" && (
-                                            <div className="mb-2">
-                                                <label className="form-label fw-bold">
-                                                    Cập nhật trạng thái:
-                                                </label>
-                                                <select
-                                                    className="form-select"
+                                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                                <InputLabel>Cập nhật trạng thái</InputLabel>
+                                                <Select
                                                     value={editedOrders[order.id] || order.status}
-                                                    onChange={(e) =>
-                                                        handleSelectChange(order.id, e.target.value)
-                                                    }
+                                                    onChange={(e) => handleSelectChange(order.id, e.target.value)}
+                                                    label="Cập nhật trạng thái"
                                                 >
-                                                    <option value="pending">Pending</option>
-                                                    <option value="delivered">Delivered</option>
-                                                    <option value="cancelled">Cancelled</option>
-                                                </select>
-                                            </div>
+                                                    <MenuItem value="pending">Pending</MenuItem>
+                                                    <MenuItem value="delivered">Delivered</MenuItem>
+                                                    <MenuItem value="cancelled">Cancelled</MenuItem>
+                                                </Select>
+                                            </FormControl>
                                         )}
-                                    </div>
-                                </div>
-                            </div>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         ))}
-                    </div>
+                    </Grid>
 
                     {currentUser?.role === "admin" && (
-                        <div className="text-center mt-3">
-                            <button
-                                className="btn btn-success px-4 py-2 fw-bold"
+                        <Box textAlign="center" mt={4}>
+                            <Button
+                                variant="contained"
+                                color="success"
+                                size="large"
                                 onClick={handleSaveAll}
+                                sx={{ px: 4, py: 1.5, borderRadius: 2, fontWeight: "bold" }}
                             >
-                                💾 Lưu
-                            </button>
-                        </div>
+                                💾 Lưu thay đổi
+                            </Button>
+                        </Box>
                     )}
                 </>
             )}
-        </div>
+        </Container>
     );
 }

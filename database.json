@@ -1,7 +1,11 @@
 {
   "users": [
     {
-      "id": "u1"
+      "id": "u1",
+      "name": "Nguyễn Văn Admin",
+      "username": "admin",
+      "password": "123",
+      "role": "admin"
     },
     {
       "id": "u2",
@@ -80,6 +84,15 @@
       "createdBy": "u1",
       "createdDate": "2025-08-15T13:13:19.406Z",
       "image": "https://2tmobile.com/wp-content/uploads/2025/03/ipad-air-m3-11-inch-cellular-2tmobile.webp"
+    },
+    {
+      "id": "c71f",
+      "name": "Nike Jordan",
+      "description": "Giày Nike",
+      "price": 5000000,
+      "stock": 15,
+      "createdBy": "u1",
+      "createdDate": "2025-08-22T11:34:02.543Z"
     }
   ],
   "orders": [
@@ -250,6 +263,16 @@
       "totalPrice": 256000000,
       "status": "delivered",
       "createdAt": "2025-08-19T12:27:39.301Z"
+    },
+    {
+      "id": "3214",
+      "userId": "u2",
+      "productId": "c71f",
+      "productName": "Nike Jordan",
+      "quantity": 3,
+      "totalPrice": 15000000,
+      "status": "pending",
+      "createdAt": "2025-08-22T11:35:14.021Z"
     }
   ]
 }

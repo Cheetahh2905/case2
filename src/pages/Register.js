@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { URL_USERS } from "../const/URLS";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    TextField,
+    Typography,
+} from "@mui/material";
 
 export default function Register() {
     const [newUser, setNewUser] = useState({
@@ -31,58 +39,74 @@ export default function Register() {
     }
 
     return (
-        <div
-            className="d-flex justify-content-center align-items-center vh-100"
-            style={{
+        <Box
+            sx={{
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 background: "linear-gradient(135deg, #74ebd5 0%, #9face6 100%)",
             }}
         >
-            <div
-                className="card shadow-lg p-4"
-                style={{
-                    width: "400px",
-                    borderRadius: "20px",
+            <Card
+                sx={{
+                    width: 400,
+                    borderRadius: 4,
+                    boxShadow: 6,
+                    background: "rgba(255,255,255,0.9)",
                     backdropFilter: "blur(12px)",
-                    background: "rgba(255, 255, 255, 0.9)",
                 }}
             >
-                <h2 className="text-center mb-4 fw-bold text-primary">Đăng ký</h2>
-                <div className="mb-3">
-                    <label className="form-label fw-semibold">Username</label>
-                    <input
-                        type="text"
-                        className="form-control form-control-lg"
+                <CardContent sx={{ p: 4 }}>
+                    <Typography
+                        variant="h5"
+                        align="center"
+                        fontWeight="bold"
+                        color="primary"
+                        gutterBottom
+                    >
+                        Đăng ký
+                    </Typography>
+
+                    <TextField
+                        fullWidth
+                        label="Username"
                         name="username"
-                        placeholder="Nhập username"
                         value={newUser.username}
                         onChange={handleChange}
+                        margin="normal"
+                        variant="outlined"
                     />
-                </div>
-                <div className="mb-3">
-                    <label className="form-label fw-semibold">Password</label>
-                    <input
+
+                    <TextField
+                        fullWidth
                         type="password"
-                        className="form-control form-control-lg"
+                        label="Password"
                         name="password"
-                        placeholder="Nhập password"
                         value={newUser.password}
                         onChange={handleChange}
+                        margin="normal"
+                        variant="outlined"
                     />
-                </div>
-                <button
-                    className="btn btn-primary w-100 py-2 fw-semibold"
-                    style={{ borderRadius: "12px" }}
-                    onClick={handleRegister}
-                >
-                    Đăng ký
-                </button>
-                <p className="mt-3 text-center">
-                    Đã có tài khoản?{" "}
-                    <a href="/" className="fw-semibold text-decoration-none text-primary">
-                        Đăng nhập
-                    </a>
-                </p>
-            </div>
-        </div>
+
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 2, borderRadius: "12px", py: 1.2, fontWeight: "bold" }}
+                        onClick={handleRegister}
+                    >
+                        Đăng ký
+                    </Button>
+
+                    <Typography align="center" sx={{ mt: 2 }}>
+                        Đã có tài khoản?{" "}
+                        <Link to="/" style={{ textDecoration: "none", fontWeight: "bold" }}>
+                            Đăng nhập
+                        </Link>
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Box>
     );
 }

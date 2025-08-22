@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { deleteProduct, getProducts } from "../service/ProductService";
 import { useNavigate } from "react-router-dom";
+import {
+    Container,
+    Grid,
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    Button,
+    Box,
+} from "@mui/material";
 
 export default function Product() {
     const [products, setProducts] = useState([]);
@@ -29,79 +39,107 @@ export default function Product() {
     }
 
     return (
-        <div className="container mt-4">
-            <h2 className="text-center mb-4 fw-bold text-primary">🛍 Danh sách sản phẩm</h2>
-            <div className="row">
+        <Container sx={{ mt: 4 }}>
+            <Typography
+                variant="h4"
+                align="center"
+                gutterBottom
+                fontWeight="bold"
+                color="primary"
+            >
+                🛍 Danh sách sản phẩm
+            </Typography>
+
+            <Grid container spacing={3}>
                 {products.map((product) => (
-                    <div key={product.id} className="col-md-4 mb-4">
-                        <div className="card h-100 shadow-lg border-0 rounded-4 overflow-hidden product-card">
+                    <Grid item xs={12} sm={6} md={4} key={product.id}>
+                        <Card
+                            sx={{
+                                borderRadius: 3,
+                                boxShadow: 4,
+                                height: "100%",
+                                transition: "transform 0.2s, box-shadow 0.2s",
+                                "&:hover": {
+                                    transform: "translateY(-5px)",
+                                    boxShadow: 8,
+                                },
+                            }}
+                        >
                             {/* Ảnh sản phẩm */}
-                            <div className="bg-light d-flex justify-content-center align-items-center" style={{ height: "180px" }}>
-                                <img
-                                    src={product.image}
-                                    alt={product.name}
-                                    className="img-fluid"
-                                    style={{ maxHeight: "200px", objectFit: "cover" }}
-                                />
-                            </div>
+                            <CardMedia
+                                component="img"
+                                image={product.image}
+                                alt={product.name}
+                                sx={{
+                                    height: 180,
+                                    objectFit: "cover",
+                                    backgroundColor: "#f8f9fa",
+                                }}
+                            />
 
                             {/* Nội dung */}
-                            <div className="card-body d-flex flex-column">
-                                <h5 className="card-title fw-bold text-dark">{product.name}</h5>
-                                <p className="card-text text-muted">{product.description}</p>
-                                <p className="mb-1">
-                                    <span className="fw-bold text-danger fs-5">{product.price}₫</span>
-                                </p>
-                                <p className="mb-3 text-secondary">
-                                    <small>Kho: {product.stock}</small>
-                                </p>
+                            <CardContent sx={{ display: "flex", flexDirection: "column" }}>
+                                <Typography variant="h6" fontWeight="bold">
+                                    {product.name}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                    sx={{ mb: 1 }}
+                                >
+                                    {product.description}
+                                </Typography>
+                                <Typography variant="h6" color="error" fontWeight="bold">
+                                    {product.price}₫
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                                    Kho: {product.stock}
+                                </Typography>
 
                                 {/* Nút */}
-                                <div className="mt-auto">
+                                <Box mt="auto">
                                     {currentUser && currentUser.role === "admin" && (
-                                        <div className="d-flex gap-2">
-                                            <button
-                                                className="btn btn-outline-danger btn-sm rounded-pill px-3"
+                                        <Box sx={{ display: "flex", gap: 1 }}>
+                                            <Button
+                                                variant="outlined"
+                                                color="error"
+                                                size="small"
+                                                fullWidth
                                                 onClick={() => handleDelete(product.id)}
                                             >
                                                 ❌ Xóa
-                                            </button>
-                                            <button
-                                                className="btn btn-outline-warning btn-sm rounded-pill px-3"
+                                            </Button>
+                                            <Button
+                                                variant="outlined"
+                                                color="warning"
+                                                size="small"
+                                                fullWidth
                                                 onClick={() =>
                                                     navigate(`/home/edit-product/${product.id}`)
                                                 }
                                             >
                                                 ✏️ Sửa
-                                            </button>
-                                        </div>
+                                            </Button>
+                                        </Box>
                                     )}
 
                                     {currentUser && currentUser.role === "user" && (
-                                        <button
-                                            className="btn btn-primary w-100 rounded-pill fw-bold"
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            fullWidth
+                                            sx={{ mt: 1, borderRadius: 3, fontWeight: "bold" }}
                                             onClick={() => navigate(`/home/products/${product.id}`)}
                                         >
                                             🔍 Xem chi tiết
-                                        </button>
+                                        </Button>
                                     )}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                                </Box>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 ))}
-            </div>
-
-            {/* CSS thêm hiệu ứng hover */}
-            <style>{`
-                .product-card {
-                    transition: transform 0.2s ease, box-shadow 0.2s ease;
-                }
-                .product-card:hover {
-                    transform: translateY(-5px);
-                    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-                }
-            `}</style>
-        </div>
+            </Grid>
+        </Container>
     );
 }

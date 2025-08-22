@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+    AppBar,
+    Toolbar,
+    Typography,
+    Button,
+    Box,
+} from "@mui/material";
 
 export default function Header() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -18,78 +25,65 @@ export default function Header() {
     }
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-                <Link className="navbar-brand" to="/home">
+        <AppBar position="static" sx={{ backgroundColor: "#212529" }}>
+            <Toolbar>
+                {/* Logo / Brand */}
+                <Typography
+                    variant="h6"
+                    component={Link}
+                    to="/home"
+                    style={{ textDecoration: "none", color: "inherit", fontWeight: "bold" }}
+                >
                     🛒 Shop App
-                </Link>
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav me-auto">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/home">
-                                Home
-                            </Link>
-                        </li>
+                </Typography>
 
-                        {currentUser && currentUser.role === "admin" && (
-                            <>
-                                <li className="nav-item">
-                                    <button
-                                        className="btn btn-link nav-link"
-                                        onClick={() => navigate("/home/add-product")}
-                                    >
-                                        Thêm sản phẩm
-                                    </button>
-                                </li>
-                                <li className="nav-item">
-                                    <button
-                                        className="btn btn-link nav-link"
-                                        onClick={() => navigate("/home/order-management")}
-                                    >
-                                        Orders
-                                    </button>
-                                </li>
-                            </>
-                        )}
+                {/* Menu bên trái */}
+                <Box sx={{ display: "flex", ml: 3 }}>
+                    <Button color="inherit" component={Link} to="/home">
+                        Home
+                    </Button>
 
-                        {currentUser && currentUser.role === "user" && (
-                            <li className="nav-item">
-                                <button
-                                    className="btn btn-link nav-link"
-                                    onClick={() => navigate("/home/order-management")}
-                                >
-                                    Orders
-                                </button>
-                            </li>
-                        )}
-                    </ul>
+                    {currentUser?.role === "admin" && (
+                        <>
+                            <Button color="inherit" onClick={() => navigate("/home/add-product")}>
+                                Thêm sản phẩm
+                            </Button>
+                            <Button color="inherit" onClick={() => navigate("/home/order-management")}>
+                                Orders
+                            </Button>
+                        </>
+                    )}
 
-                    <ul className="navbar-nav ms-auto">
-                        {currentUser && (
-                            <>
-                                <li className="nav-item">
-                                    <button
-                                        className="btn btn-link nav-link"
-                                        onClick={() =>
-                                            navigate(`/home/edit-user/${currentUser.id}`)
-                                        }
-                                    >
-                                        User
-                                    </button>
-                                </li>
-                                <li className="nav-item">
-                                    <button
-                                        className="btn btn-outline-light ms-2"
-                                        onClick={handleLogout}
-                                    >
-                                        Logout {currentUser.name}
-                                    </button>
-                                </li>
-                            </>
-                        )}
-                    </ul>
-                </div>
-            </div>
-        </nav>
+                    {currentUser?.role === "user" && (
+                        <Button color="inherit" onClick={() => navigate("/home/order-management")}>
+                            Orders
+                        </Button>
+                    )}
+                </Box>
+
+                {/* Spacer đẩy phần user sang phải */}
+                <Box sx={{ flexGrow: 1 }} />
+
+                {/* Menu bên phải */}
+                {currentUser && (
+                    <Box sx={{ display: "flex", alignItems: "center" }}>
+                        <Button
+                            color="inherit"
+                            onClick={() => navigate(`/home/edit-user/${currentUser.id}`)}
+                        >
+                            User
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="inherit"
+                            sx={{ ml: 2 }}
+                            onClick={handleLogout}
+                        >
+                            Logout {currentUser.name}
+                        </Button>
+                    </Box>
+                )}
+            </Toolbar>
+        </AppBar>
     );
 }

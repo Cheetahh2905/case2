@@ -2,6 +2,22 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { editProduct, getProductById } from "../service/ProductService";
 
+// MUI Components
+import {
+    Container,
+    TextField,
+    Typography,
+    Button,
+    Box,
+    Card,
+    CardContent,
+    CardHeader,
+    Grid,
+} from "@mui/material";
+
+import SaveIcon from "@mui/icons-material/Save";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 export default function EditProduct() {
     const { id } = useParams();
     const [product, setProduct] = useState({
@@ -35,92 +51,84 @@ export default function EditProduct() {
     }
 
     return (
-        <div className="container py-5">
-            <div className="row justify-content-center">
-                <div className="col-md-7 col-lg-6">
-                    <div className="card shadow-lg border-0 rounded-4 overflow-hidden">
-                        <div className="card-header bg-gradient bg-warning text-dark text-center py-4">
-                            <h3 className="mb-0 fw-bold">✏️ Chỉnh sửa sản phẩm</h3>
-                        </div>
-                        <div className="card-body p-5">
-                            <form onSubmit={handleEdit}>
-                                <div className="form-floating mb-4">
-                                    <input
-                                        type="text"
-                                        className="form-control rounded-3"
-                                        id="name"
-                                        value={product.name}
-                                        name="name"
-                                        placeholder="Tên sản phẩm"
-                                        onChange={handleChange}
-                                    />
-                                    <label htmlFor="name">Tên sản phẩm</label>
-                                </div>
+        <Container maxWidth="sm" sx={{ py: 5 }}>
+            <Card elevation={6} sx={{ borderRadius: 3 }}>
+                <CardHeader
+                    title="✏️ Chỉnh sửa sản phẩm"
+                    sx={{
+                        textAlign: "center",
+                        background: "linear-gradient(90deg, #FFD54F, #FFB300)",
+                        color: "#000",
+                        fontWeight: "bold",
+                    }}
+                />
+                <CardContent>
+                    <Box component="form" onSubmit={handleEdit} noValidate>
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            label="Tên sản phẩm"
+                            name="name"
+                            value={product.name}
+                            onChange={handleChange}
+                        />
+                        <TextField
+                            margin="normal"
+                            fullWidth
+                            label="Mô tả"
+                            name="description"
+                            multiline
+                            rows={4}
+                            value={product.description}
+                            onChange={handleChange}
+                        />
 
-                                <div className="form-floating mb-4">
-                                    <textarea
-                                        className="form-control rounded-3"
-                                        id="description"
-                                        style={{ height: "100px" }}
-                                        value={product.description}
-                                        name="description"
-                                        placeholder="Mô tả"
-                                        onChange={handleChange}
-                                    ></textarea>
-                                    <label htmlFor="description">Mô tả</label>
-                                </div>
+                        <Grid container spacing={2} sx={{ mt: 1 }}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    type="number"
+                                    fullWidth
+                                    label="Giá (₫)"
+                                    name="price"
+                                    value={product.price}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    type="number"
+                                    fullWidth
+                                    label="Số lượng tồn"
+                                    name="stock"
+                                    value={product.stock}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                        </Grid>
 
-                                <div className="row g-4">
-                                    <div className="col-md-6">
-                                        <div className="form-floating">
-                                            <input
-                                                type="number"
-                                                className="form-control rounded-3"
-                                                id="price"
-                                                value={product.price}
-                                                name="price"
-                                                placeholder="Giá"
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="price">Giá (₫)</label>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="form-floating">
-                                            <input
-                                                type="number"
-                                                className="form-control rounded-3"
-                                                id="stock"
-                                                value={product.stock}
-                                                name="stock"
-                                                placeholder="Số lượng tồn"
-                                                onChange={handleChange}
-                                            />
-                                            <label htmlFor="stock">Số lượng tồn</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="d-flex justify-content-between mt-5">
-                                    <button
-                                        type="button"
-                                        className="btn btn-outline-secondary px-4 py-2 rounded-3"
-                                        onClick={() => navigate(-1)}
-                                    >
-                                        ⬅️ Quay lại
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary px-4 py-2 rounded-3 fw-bold shadow-sm"
-                                    >
-                                        💾 Lưu thay đổi
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <Box
+                            sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
+                        >
+                            <Button
+                                variant="outlined"
+                                color="secondary"
+                                startIcon={<ArrowBackIcon />}
+                                onClick={() => navigate(-1)}
+                            >
+                                Quay lại
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                startIcon={<SaveIcon />}
+                            >
+                                Lưu thay đổi
+                            </Button>
+                        </Box>
+                    </Box>
+                </CardContent>
+            </Card>
+        </Container>
     );
 }

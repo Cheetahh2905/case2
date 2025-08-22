@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addProduct } from "../service/ProductService";
+import {
+    Box,
+    Card,
+    CardContent,
+    CardHeader,
+    TextField,
+    Button,
+    Grid,
+    Typography,
+} from "@mui/material";
 
 export default function CreateProduct() {
     const [currentUser, setCurrentUser] = useState(null);
@@ -37,83 +47,82 @@ export default function CreateProduct() {
     }
 
     return (
-        <div className="container py-5">
-            <div className="row justify-content-center">
-                <div className="col-lg-6 col-md-8">
-                    <div className="card shadow rounded-4 border-0">
-                        <div className="card-header bg-gradient bg-primary text-white text-center py-4 rounded-top-4">
-                            <h4 className="mb-0 fw-bold">➕ Thêm sản phẩm mới</h4>
-                        </div>
-                        <div className="card-body p-4">
-                            <div className="form-floating mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control rounded-3"
-                                    id="name"
-                                    name="name"
-                                    value={newProduct.name}
+        <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="80vh"
+        >
+            <Card sx={{ width: 500, borderRadius: 3, boxShadow: 4 }}>
+                <CardHeader
+                    title={
+                        <Typography variant="h6" fontWeight="bold" textAlign="center">
+                            ➕ Thêm sản phẩm mới
+                        </Typography>
+                    }
+                    sx={{ bgcolor: "primary.main", color: "white", textAlign: "center" }}
+                />
+                <CardContent>
+                    <Box display="flex" flexDirection="column" gap={3}>
+                        <TextField
+                            label="Tên sản phẩm"
+                            name="name"
+                            value={newProduct.name}
+                            onChange={handleChange}
+                            fullWidth
+                            variant="outlined"
+                        />
+                        <TextField
+                            label="Mô tả"
+                            name="description"
+                            value={newProduct.description}
+                            onChange={handleChange}
+                            fullWidth
+                            multiline
+                            rows={3}
+                            variant="outlined"
+                        />
+                        <Grid container spacing={2}>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="Giá (₫)"
+                                    name="price"
+                                    type="number"
+                                    value={newProduct.price}
                                     onChange={handleChange}
-                                    placeholder="Tên sản phẩm"
+                                    fullWidth
+                                    variant="outlined"
                                 />
-                                <label htmlFor="name">Tên sản phẩm</label>
-                            </div>
-
-                            <div className="form-floating mb-3">
-                                <textarea
-                                    className="form-control rounded-3"
-                                    id="description"
-                                    name="description"
-                                    rows="3"
-                                    value={newProduct.description}
+                            </Grid>
+                            <Grid item xs={6}>
+                                <TextField
+                                    label="Số lượng tồn"
+                                    name="stock"
+                                    type="number"
+                                    value={newProduct.stock}
                                     onChange={handleChange}
-                                    placeholder="Mô tả sản phẩm"
-                                    style={{ height: "100px" }}
-                                ></textarea>
-                                <label htmlFor="description">Mô tả</label>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-md-6 mb-3">
-                                    <div className="form-floating">
-                                        <input
-                                            type="number"
-                                            className="form-control rounded-3"
-                                            id="price"
-                                            name="price"
-                                            value={newProduct.price}
-                                            onChange={handleChange}
-                                            placeholder="Giá"
-                                        />
-                                        <label htmlFor="price">Giá (₫)</label>
-                                    </div>
-                                </div>
-                                <div className="col-md-6 mb-3">
-                                    <div className="form-floating">
-                                        <input
-                                            type="number"
-                                            className="form-control rounded-3"
-                                            id="stock"
-                                            name="stock"
-                                            value={newProduct.stock}
-                                            onChange={handleChange}
-                                            placeholder="Số lượng tồn"
-                                        />
-                                        <label htmlFor="stock">Số lượng tồn</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <button
-                                className="btn btn-primary w-100 py-2 fw-bold rounded-3 shadow-sm"
-                                onClick={handleAdd}
-                                style={{ transition: "0.3s" }}
-                            >
-                                ✅ Lưu sản phẩm
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                    fullWidth
+                                    variant="outlined"
+                                />
+                            </Grid>
+                        </Grid>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleAdd}
+                            sx={{
+                                fontWeight: "bold",
+                                py: 1.2,
+                                borderRadius: 2,
+                                boxShadow: 2,
+                                "&:hover": { boxShadow: 4 },
+                            }}
+                        >
+                            ✅ Lưu sản phẩm
+                        </Button>
+                    </Box>
+                </CardContent>
+            </Card>
+        </Box>
     );
 }

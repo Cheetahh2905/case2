@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getProductById } from "../service/ProductService";
 import { createOrder } from "../service/OrderService";
+import {
+    Container,
+    Card,
+    CardContent,
+    Typography,
+    TextField,
+    Button,
+    Box,
+} from "@mui/material";
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -33,39 +42,59 @@ export default function ProductDetail() {
         navigate("/home/orders");
     }
 
-    if (!product) return <div className="text-center mt-5">Loading...</div>;
+    if (!product)
+        return (
+            <Typography variant="h6" align="center" sx={{ mt: 5 }}>
+                Loading...
+            </Typography>
+        );
 
     return (
-        <div className="container mt-5">
-            <div className="card shadow-lg border-0 rounded-4">
-                <div className="card-body p-4">
-                    <h2 className="card-title text-center mb-3 text-primary fw-bold">
+        <Container maxWidth="sm" sx={{ mt: 5 }}>
+            <Card sx={{ boxShadow: 4, borderRadius: 3 }}>
+                <CardContent>
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: "bold", color: "primary.main" }}
+                    >
                         {product.name}
-                    </h2>
-                    <p className="text-muted">{product.description}</p>
-                    <p className="fw-bold fs-5 text-danger">
-                        Giá: {product.price.toLocaleString()} VNĐ
-                    </p>
+                    </Typography>
 
-                    <div className="mb-3">
-                        <label className="form-label">Số lượng:</label>
-                        <input
+                    <Typography variant="body1" color="text.secondary" gutterBottom>
+                        {product.description}
+                    </Typography>
+
+                    <Typography
+                        variant="h6"
+                        sx={{ fontWeight: "bold", color: "error.main", mb: 2 }}
+                    >
+                        Giá: {product.price.toLocaleString()} VNĐ
+                    </Typography>
+
+                    <Box sx={{ mb: 3 }}>
+                        <TextField
+                            label="Số lượng"
                             type="number"
                             value={quantity}
-                            min={1}
-                            className="form-control w-25"
                             onChange={(e) => setQuantity(e.target.value)}
+                            inputProps={{ min: 1 }}
+                            sx={{ width: "120px" }}
                         />
-                    </div>
+                    </Box>
 
-                    <button
+                    <Button
+                        variant="contained"
+                        color="success"
+                        fullWidth
+                        size="large"
                         onClick={handleBuy}
-                        className="btn btn-success w-100 fw-bold"
                     >
                         🛒 Mua ngay
-                    </button>
-                </div>
-            </div>
-        </div>
+                    </Button>
+                </CardContent>
+            </Card>
+        </Container>
     );
 }
